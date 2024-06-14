@@ -17,23 +17,23 @@ vim.opt.shortmess = vim.opt.shortmess + 'o' -- overwrite file-written messages
 vim.opt.shortmess = vim.opt.shortmess + 't' -- truncate file messages at start
 
 -- Searching --
-vim.opt.incsearch = true 
-vim.opt.hlsearch = true
+vim.opt.incsearch  = true 
+vim.opt.hlsearch   = true
 vim.opt.ignorecase = true -- ignore case in searches
-vim.opt.smartcase = true -- don't ignore case in searches if uppercase characters present
+vim.opt.smartcase  = true -- don't ignore case in searches if uppercase characters present
 
 -- Line modifications --
-vim.opt.number = true
+vim.opt.number         = true
 vim.opt.relativenumber = true
-vim.opt.numberwidth = 4
-vim.opt.wrap = false
-vim.opt.cursorline= true
-vim.opt.list = true -- show whitespace
+vim.opt.numberwidth    = 4
+vim.opt.wrap           = false
+vim.opt.cursorline     = true
+vim.opt.list           = true -- show whitespace
 
 vim.opt.autoindent = true -- maintain indent of current line
-vim.opt.backspace = 'indent,start,eol' -- allow unrestricted backspacing in insert mode
+vim.opt.backspace  = 'indent,start,eol' -- allow unrestricted backspacing in insert mode
 
-vim.opt.emoji = false -- don't assume all emoji are double width
+vim.opt.emoji     = false -- don't assume all emoji are double width
 vim.opt.expandtab = true -- always use spaces instead of tabs
 vim.opt.fillchars = {
   diff = '∙', -- BULLET OPERATOR (U+2219, UTF-8: E2 88 99)
@@ -42,4 +42,10 @@ vim.opt.fillchars = {
   vert = '┃', -- BOX DRAWINGS HEAVY VERTICAL (U+2503, UTF-8: E2 94 83)
 }
 
+-- Split options
+vim.opt.splitright = true -- Split new buffer to the right
+vim.opt.splitbelow = true -- Split new buffer below
 
+-- Theme Gruvbox
+-- Default options:
+--vim.cmd("colorscheme gruvbox")
