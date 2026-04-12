@@ -90,3 +90,13 @@ map("n", "<F1>", "<cmd>Lazy<CR>", { desc = "Lazy" })
 
 -- Mason UI
 map("n", "<F2>", "<cmd>Mason<CR>", { desc = "Mason" })
+
+map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<CR>", { desc = "Diagnostics" })
+map("n", "<leader>xw", "<cmd>Trouble workspace_diagnostics<CR>", { desc = "Workspace Diagnostics" })
+map("n", "<leader>xd", "<cmd>Trouble document_diagnostics<CR>", { desc = "Document Diagnostics" })
+map("n", "<leader>xl", "<cmd>Trouble loclist<CR>", { desc = "Location List" })
+map("n", "<leader>xq", "<cmd>Trouble quickfix<CR>", { desc = "Quickfix List" })
+
+map("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+map("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev diagnostic" })
+map("n", "<leader>e", vim.diagnostic.open_float, { desc = "Line diagnostics" })
