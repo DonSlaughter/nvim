@@ -84,3 +84,9 @@ map("n", "<leader>i2", function() set_indent(2) end, { desc = "Indent 2" })
 map("n", "<leader>i4", function() set_indent(4) end, { desc = "Indent 4" })
 map("n", "<leader>i6", function() set_indent(6) end, { desc = "Indent 6" })
 map("n", "<leader>i8", function() set_indent(8) end, { desc = "Indent 8" })
+
+-- Lazy UI
+map("n", "<F1>", "<cmd>Lazy<CR>", { desc = "Lazy" })
+
+-- Mason UI
+map("n", "<F2>", "<cmd>Mason<CR>", { desc = "Mason" })

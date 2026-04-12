@@ -14,9 +14,18 @@ opt.clipboard = "unnamed"
 opt.list = true
 opt.backspace = { "indent", "start", "eol" }
 
-opt.expandtab = false
+opt.expandtab = true
 opt.tabstop = 4
 opt.shiftwidth = 4
+opt.softtabstop = 4
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "make",
+    callback = function()
+        vim.opt_local.expandtab = false
+    end,
+})
+
 opt.syntax = "on"
 
 opt.shortmess:append({ I = true, c = true, A = true, W = true })

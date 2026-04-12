@@ -20,3 +20,22 @@ vim.lsp.config("pyright", {
 
 vim.lsp.enable("clangd")
 vim.lsp.enable("pyright")
+
+vim.lsp.config("lua_ls", {
+    settings = {
+        Lua = {
+            runtime = {
+                version = "LuaJIT",
+            },
+            diagnostics = {
+                globals = { "vim" }, -- wichtig!
+            },
+            workspace = {
+                library = vim.api.nvim_get_runtime_file("", true),
+            },
+            telemetry = {
+                enable = false,
+            },
+        },
+    },
+})

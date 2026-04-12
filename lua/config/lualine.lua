@@ -34,6 +34,22 @@ lualine.setup({
             },
             "encoding",
             "filetype",
+            {
+                function()
+                    local clients = vim.lsp.get_clients({ bufnr = 0 })
+                    if not clients or #clients == 0 then
+                        return "No LSP"
+                    end
+
+                    -- mehrere Clients möglich (z. B. clangd + null-ls später)
+                    local names = {}
+                    for _, client in ipairs(clients) do
+                        table.insert(names, client.name)
+                    end
+
+                    return table.concat(names, ", ")
+                end,
+            },
         },
 
         lualine_y = { "progress" },
