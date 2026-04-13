@@ -57,3 +57,12 @@ opt.termguicolors = true
 if vim.fn.has("virtualedit") == 1 then
     opt.virtualedit = "block"
 end
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "tex",
+    callback = function()
+        vim.opt_local.spell = true
+        vim.opt_local.spelllang = { "de", "en" }
+    end,
+})
+vim.env.PATH = vim.env.PATH .. ":/usr/bin"
