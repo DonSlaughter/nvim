@@ -25,14 +25,11 @@ map("n", "<leader>tf", "<cmd>tabnew %<cr>")
 -- toggle list
 map("n", "<leader>l", "<cmd>set list!<cr>")
 
--- disable F1
-map({ "n", "i", "c" }, "<F1>", "<Esc>")
-
 -- ; -> :
 map("n", ";", ":")
 
 -- toggle line numbers
-map("n", "<C-n>", function()
+map("n", "<C-N>", function()
     vim.wo.relativenumber = not vim.wo.relativenumber
     vim.wo.number = true
 end)
@@ -100,3 +97,15 @@ map("n", "<leader>xq", "<cmd>Trouble quickfix<CR>", { desc = "Quickfix List" })
 map("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
 map("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev diagnostic" })
 map("n", "<leader>e", vim.diagnostic.open_float, { desc = "Line diagnostics" })
+
+map("n", "<leader>ac", "<cmd>CodeCompanionChat<CR>",
+    { desc = "AI Chat" })
+
+map("v", "<leader>ae", "<cmd>CodeCompanionChat<CR>",
+    { desc = "Explain Selection" })
+
+map("n", "<leader>aa", "<cmd>CodeCompanionActions<CR>",
+    { desc = "AI Actions" })
+
+map("n", "<leader>ai", "<cmd>CodeCompanion<CR>",
+    { desc = "Inline AI" })
