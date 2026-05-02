@@ -94,8 +94,6 @@ map("n", "<leader>xd", "<cmd>Trouble document_diagnostics<CR>", { desc = "Docume
 map("n", "<leader>xl", "<cmd>Trouble loclist<CR>", { desc = "Location List" })
 map("n", "<leader>xq", "<cmd>Trouble quickfix<CR>", { desc = "Quickfix List" })
 
-map("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
-map("n", "[d", vim.diagnostic.goto_prev, { desc = "Prev diagnostic" })
 map("n", "<leader>e", vim.diagnostic.open_float, { desc = "Line diagnostics" })
 
 map("n", "<leader>ac", "<cmd>CodeCompanionChat<CR>",

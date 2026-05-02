@@ -1,7 +1,18 @@
--- =========================
--- ON ATTACH (Keymaps)
--- =========================
-local on_attach = function(_, bufnr) -- client bewusst ignoriert
+-- =========================================================
+-- LSP CORE SETUP (Neovim 0.11+ / 0.12+ API)
+-- =========================================================
+
+-- Mason binaries in PATH einhängen (WICHTIG)
+vim.env.PATH = vim.env.PATH
+    .. ":"
+    .. vim.fn.stdpath("data")
+    .. "/mason/bin"
+
+-- =========================================================
+-- ON ATTACH (Keymaps pro Buffer)
+-- =========================================================
+
+local on_attach = function(_, bufnr)
     local map = vim.keymap.set
     local opts = { buffer = bufnr, silent = true }
 
@@ -11,17 +22,18 @@ local on_attach = function(_, bufnr) -- client bewusst ignoriert
     map("n", "<leader>rn", vim.lsp.buf.rename, opts)
     map("n", "<leader>ca", vim.lsp.buf.code_action, opts)
 
-    -- optional aber sehr sinnvoll:
-    map("n", "gr", vim.lsp.buf.references, opts)
-    map("n", "<leader>f", function()
-        vim.lsp.buf.format({ async = true })
-    end, opts)
+    -- Diagnostics navigation (optional aber sinnvoll)
+    map("n", "[d", vim.diagnostic.goto_prev, opts)
+    map("n", "]d", vim.diagnostic.goto_next, opts)
 end
 
--- =========================
--- CLANGD (C++)
--- =========================
+-- =========================================================
+-- clangd (C / C++)
+-- =========================================================
+
 vim.lsp.config("clangd", {
+    on_attach = on_attach,
+
     cmd = {
         "clangd",
         "--background-index",
@@ -29,41 +41,68 @@ vim.lsp.config("clangd", {
         "--completion-style=detailed",
         "--header-insertion=never",
     },
-    root_markers = { "compile_commands.json", ".git" },
-    on_attach = on_attach,
+
+    filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+
+    root_markers = {
+        "compile_commands.json",
+        "CMakeLists.txt",
+        ".git",
+    },
 })
 
--- =========================
--- PYRIGHT (Python)
--- =========================
+vim.lsp.enable("clangd")
+
+-- =========================================================
+-- pyright (Python)
+-- =========================================================
+
 vim.lsp.config("pyright", {
     on_attach = on_attach,
+
     settings = {
         python = {
             analysis = {
                 autoSearchPaths = true,
+                diagnosticMode = "openFilesOnly",
                 useLibraryCodeForTypes = true,
             },
         },
     },
+
+    root_markers = {
+        "pyproject.toml",
+        "setup.py",
+        "setup.cfg",
+        "requirements.txt",
+        ".git",
+    },
 })
 
--- =========================
--- LUA (Neovim config)
--- =========================
+vim.lsp.enable("pyright")
+
+-- =========================================================
+-- lua_ls (Neovim Lua Dev)
+-- =========================================================
+
 vim.lsp.config("lua_ls", {
     on_attach = on_attach,
+
     settings = {
         Lua = {
             runtime = {
                 version = "LuaJIT",
             },
+
             diagnostics = {
                 globals = { "vim" },
             },
+
             workspace = {
                 library = vim.api.nvim_get_runtime_file("", true),
+                checkThirdParty = false,
             },
+
             telemetry = {
                 enable = false,
             },
@@ -71,16 +110,12 @@ vim.lsp.config("lua_ls", {
     },
 })
 
--- =========================
--- ENABLE LSPs
--- =========================
-vim.lsp.enable("clangd")
-vim.lsp.enable("pyright")
 vim.lsp.enable("lua_ls")
 
--- =========================
--- DIAGNOSTICS UI
--- =========================
+-- =========================================================
+-- DIAGNOSTICS GLOBAL CONFIG
+-- =========================================================
+
 vim.diagnostic.config({
     virtual_text = true,
     underline = true,
