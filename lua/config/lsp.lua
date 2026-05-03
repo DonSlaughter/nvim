@@ -12,9 +12,17 @@ vim.env.PATH = vim.env.PATH
 -- ON ATTACH (Keymaps pro Buffer)
 -- =========================================================
 
-local on_attach = function(_, bufnr)
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+local cmp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+capabilities = vim.tbl_deep_extend("force", capabilities, cmp_capabilities)
+
+local on_attach = function(client, bufnr)
     local map = vim.keymap.set
     local opts = { buffer = bufnr, silent = true }
+
+    if client.name == "clangd" then
+        client.server_capabilities.signatureHelpProvider = false
+    end
 
     map("n", "gd", vim.lsp.buf.definition, opts)
     map("n", "K", vim.lsp.buf.hover, opts)
@@ -25,6 +33,9 @@ local on_attach = function(_, bufnr)
     -- Diagnostics navigation (optional aber sinnvoll)
     map("n", "[d", vim.diagnostic.goto_prev, opts)
     map("n", "]d", vim.diagnostic.goto_next, opts)
+
+    map("n", "<leader>e", vim.diagnostic.open_float, opts)
+    map("n", "<leader>q", vim.diagnostic.setloclist, opts)
 end
 
 -- =========================================================
@@ -33,6 +44,7 @@ end
 
 vim.lsp.config("clangd", {
     on_attach = on_attach,
+    capabilities = capabilities,
 
     cmd = {
         "clangd",
@@ -40,6 +52,7 @@ vim.lsp.config("clangd", {
         "--clang-tidy",
         "--completion-style=detailed",
         "--header-insertion=never",
+        "--compile-commands-dir=build",
     },
 
     filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
@@ -47,6 +60,9 @@ vim.lsp.config("clangd", {
     root_markers = {
         "compile_commands.json",
         "CMakeLists.txt",
+        "build",
+        "install",
+        "src",
         ".git",
     },
 })
@@ -59,6 +75,7 @@ vim.lsp.enable("clangd")
 
 vim.lsp.config("pyright", {
     on_attach = on_attach,
+    capabilities = capabilities,
 
     settings = {
         python = {
@@ -87,6 +104,7 @@ vim.lsp.enable("pyright")
 
 vim.lsp.config("lua_ls", {
     on_attach = on_attach,
+    capabilities = capabilities,
 
     settings = {
         Lua = {
